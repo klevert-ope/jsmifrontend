@@ -1,7 +1,7 @@
 # Stage 1: Building the Svelte Node app
 
 # Start from the official Node.js 20 image based on Alpine Linux
-FROM node:20-alpine AS builder
+FROM node:23-alpine3.19 AS builder
 
 # Set the working directory to /app
 WORKDIR /app
@@ -21,13 +21,10 @@ RUN npm run build
 # Remove development dependencies
 RUN npm prune --omit=dev
 
-# Stage 2: Running the Svelte Node app with non-root user
+# Stage 2: Running the Svelte Node app
 
-# Start from the official Node.js 20 image based on Alpine Linux
-FROM node:20-alpine
-
-# Create a new group and user named "app"
-RUN addgroup -S app && adduser -S app -G app
+# Start from the official Node.js 23 image based on Alpine Linux
+FROM node:23-alpine3.19
 
 # Set the working directory to /app
 WORKDIR /app
@@ -38,12 +35,6 @@ COPY --from=builder /app/node_modules node_modules/
 
 # Copy package.json and package-lock.json files to the working directory
 COPY package*.json ./
-
-# Change ownership of the /app directory to the "app" user
-RUN chown -R app:app /app
-
-# Switch to the "app" user
-USER app
 
 # Expose port 3000 for the Svelte Node app
 EXPOSE 3000
