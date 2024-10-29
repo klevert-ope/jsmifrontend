@@ -8,7 +8,6 @@
 </svelte:head>
 
 <script lang="ts">
-	import IoMdArrowDropleft from 'svelte-icons/io/IoMdArrowDropleft.svelte';
 	import Modal from '$lib/newsModal.svelte';
 	import ToastForm from '$lib/toastform.svelte';
 	import { enhance } from '$app/forms';
@@ -31,17 +30,16 @@
 		wordCountExcerpt,
 		wordCountTitle
 	} from './store';
-	import FaPenSquare from 'svelte-icons/fa/FaPenSquare.svelte';
-	import MdDelete from 'svelte-icons/md/MdDelete.svelte';
-	import FaPen from 'svelte-icons/fa/FaPen.svelte';
 	import { blogPostSchema } from './blogPostSchema';
-	import { onMount } from 'svelte';
 	import { get, writable } from 'svelte/store';
+	import { IoCreate, IoTrashBin } from 'svelte-icons-pack/io';
+	import { Icon } from 'svelte-icons-pack';
+	import { BiSolidLeftArrow, BiSolidPencil } from 'svelte-icons-pack/bi';
 
 	const editing = writable(new Map<string, boolean>());
 	const modals = writable(new Map<string, boolean>());
 
-	export let data: PostsData;
+	let { data } = $props<{ data: PostsData }>();
 
 	function handleInputTitle(event: Event) {
 		form.errors = { ...initialFormErrors };
@@ -104,7 +102,7 @@
 		}
 	}
 
-	onMount(() => {
+	$effect(() => {
 		if (data.success === true && data.posts !== null) {
 			posts.set(data.posts);
 		} else if (data.error !== undefined) {
@@ -156,17 +154,17 @@
 		});
 	}
 
-
 	editorContent.subscribe(content => {
 		form.data.body = content;
 	});
 </script>
 
+
 <section class="container h-svh">
 	<div>
 		<a class="back-nav" href="/admin">
 			<div class="back-icon">
-				<IoMdArrowDropleft />
+				<Icon size="24" src={BiSolidLeftArrow} />
 			</div>
 			<p>Back</p>
 		</a>
@@ -175,8 +173,8 @@
 	<div
 		aria-label="create button"
 		class="create-button"
-		on:click={() => toggleModal('new')}
-		on:keydown={(event) => {
+		onclick={() => toggleModal('new')}
+		onkeydown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
             toggleModal('new');
         }
@@ -185,13 +183,13 @@
 		tabindex="0">
 		<p class="create-button-label">Create</p>
 		<div class="create-icon">
-			<FaPenSquare />
+			<Icon color="var(--yellow)" size="20" src={IoCreate} />
 		</div>
 	</div>
 
 	{#if $modals.has('new')}
 		<Modal isOpen={$modals.get('new') ?? false}
-					 on:close={() => toggleModal('new')}>
+					 onclose={() => toggleModal('new')}>
 			<form action="?/postnews"
 						class="padding-y container"
 						method="POST"
@@ -214,22 +212,22 @@
 							}
 						}}>
 					<textarea bind:value={form.data.title} id="title" name="title"
-										on:input={handleInputTitle}
-										placeholder="Write your title..." />
+										oninput={handleInputTitle}
+										placeholder="Write your title..."></textarea>
 				<p class="font-xs flex-end">{$wordCountTitle}/15 Words</p>
 				{#if form.errors.title}
 					<p class="font-xs errormessage">{form.errors.title}</p>
 				{/if}
 
 				<textarea bind:value={form.data.excerpt} id="excerpt" name="excerpt"
-									on:input={handleInputExcerpt}
-									placeholder="Write your excerpt..." />
+									oninput={handleInputExcerpt}
+									placeholder="Write your excerpt..."></textarea>
 				<p class="font-xs flex-end">{$wordCountExcerpt}/60 Words</p>
 				{#if form.errors.excerpt}
 					<p class="font-xs errormessage">{form.errors.excerpt}</p>
 				{/if}
 
-				<PostQuillEditorBody on:input={ event=> {handleInputBody(event);}} />
+				<PostQuillEditorBody on:input={handleInputBody} />
 				{#if form.errors.body}
 					<p class="font-xs errormessage">{form.errors.body}</p>
 				{/if}
@@ -256,7 +254,7 @@
 			</div>
 		</div>
 	{:else if $error}
-		<p class="errormessage font-xs">Error: {$error}</p>
+		<p class="errormessage-table font-xs">Error: {$error}</p>
 	{:else}
 		<table>
 			<thead>
@@ -277,8 +275,8 @@
 							<div
 								aria-label="edit button"
 								class="edit-button"
-								on:click={() => openEditModal(post)}
-								on:keydown={(event) => {
+								onclick={() => openEditModal(post)}
+								onkeydown={(event) => {
 											if (event.key === 'Enter' || event.key === ' ') {
 												openEditModal(post);
 											}
@@ -286,14 +284,14 @@
 								role="button"
 								tabindex="0">
 								<div class="edit-icon">
-									<FaPen />
+									<Icon size="20" src={BiSolidPencil} />
 								</div>
 							</div>
 							<div
 								aria-label="delete button"
 								class="delete-button"
-								on:click={() => toggleModal(post.id)}
-								on:keydown={(event) => {
+								onclick={() => toggleModal(post.id)}
+								onkeydown={(event) => {
 											if (event.key === 'Enter' || event.key === ' ') {
 												toggleModal(post.id);
 											}
@@ -301,13 +299,13 @@
 								role="button"
 								tabindex="0">
 								<div class="delete-icon">
-									<MdDelete />
+									<Icon size="20" src={IoTrashBin} />
 								</div>
 							</div>
 						</div>
 						{#if $modals.has(post.id)}
 							<Modal isOpen={$modals.get(post.id) ?? false}
-										 on:close={() => closeModal(post.id)}>
+										 onclose={() => closeModal(post.id)}>
 								{#if $editing.has(post.id)}
 									<form
 										action="?/updatenews"
@@ -335,8 +333,8 @@
 										<textarea name="title"
 															placeholder="Update title"
 															bind:value={form.data.title}
-															on:input={handleInputTitle}
-										/>
+															oninput={handleInputTitle}
+										></textarea>
 										<p class="font-xs flex-end">{$wordCountTitle}/15 Words</p>
 										{#if form.errors.title}
 											<p class="font-xs errormessage">{form.errors.title}</p>
@@ -344,14 +342,13 @@
 										<textarea name="excerpt"
 															placeholder="Update excerpt"
 															bind:value={form.data.excerpt}
-															on:input={handleInputExcerpt}
-										/>
+															oninput={handleInputExcerpt}
+										></textarea>
 										<p class="font-xs flex-end">{$wordCountExcerpt}/60 Words</p>
 										{#if form.errors.excerpt}
 											<p class="font-xs errormessage">{form.errors.excerpt}</p>
 										{/if}
-										<UpdateQuillEditorBody initialContent={form.data.body}
-																					 on:input={handleInputBody} />
+										<UpdateQuillEditorBody on:input={handleInputBody} />
 										{#if form.errors.body}
 											<p class="font-xs errormessage">{form.errors.body}</p>
 										{/if}
@@ -443,7 +440,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		margin-bottom: 40px;
@@ -482,6 +479,12 @@
 
 	.errormessage {
 		margin-top: -30px;
+		margin-bottom: 60px;
+		color: #ff0000;
+		}
+
+	.errormessage-table {
+		margin-top: 30px;
 		margin-bottom: 60px;
 		color: #ff0000;
 		}
@@ -606,8 +609,6 @@
 		}
 
 	.edit-icon {
-		width: 18px;
-		height: 18px;
 		color: var(--yellow);
 		}
 
@@ -620,8 +621,6 @@
 		}
 
 	.delete-icon {
-		width: 20px;
-		height: 20px;
 		color: var(--yellow);
 		}
 
@@ -732,10 +731,5 @@
 
 	.back-nav:hover {
 		color: var(--blue);
-		}
-
-	.back-icon {
-		width: 25px;
-		height: 25px;
 		}
 </style>

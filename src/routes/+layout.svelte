@@ -1,6 +1,6 @@
 <svelte:head>
 	<link href="https://fonts.cdnfonts.com/css/br-segma" rel="stylesheet">
-	<link href="https://fonts.cdnfonts.com/css/learchitect" rel="stylesheet">
+	<link href="https://fonts.cdnfonts.com/css/waiting-summer" rel="stylesheet">
 </svelte:head>
 
 <script lang="ts">
@@ -12,6 +12,8 @@
 	interface Navigation {
 		complete: Promise<void>;
 	}
+
+	let { children } = $props<{ children?: () => any }>();
 
 	onNavigate((navigation: Navigation) => {
 		if (!('startViewTransition' in document)) return;
@@ -27,7 +29,7 @@
 	});
 </script>
 
-<slot />
+{@render children?.()}
 <Footer />
 <DonateFloat />
 

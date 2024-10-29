@@ -20,7 +20,7 @@
 
 <style>
 	.schedule-header {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);

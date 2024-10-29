@@ -7,7 +7,8 @@
 
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import FaSignOutAlt from 'svelte-icons/fa/FaSignOutAlt.svelte';
+	import { AiOutlineLogout } from 'svelte-icons-pack/ai';
+	import { Icon } from 'svelte-icons-pack';
 </script>
 
 <section class="h-svh">
@@ -31,7 +32,7 @@
 						class="logging-out"
 						type="submit"
 					>
-						<FaSignOutAlt />
+						<Icon color="var(--yellow)" size="28" src={AiOutlineLogout} />
 					</button>
 				</div>
 			</form>
@@ -55,11 +56,8 @@
 		}
 
 	.logging-out {
-		width: 20px;
-		height: 20px;
 		padding: 5px;
 		cursor: pointer;
-		color: var(--yellow);
 		border-radius: 50%;
 		background-color: #141414;
 		}
@@ -89,7 +87,7 @@
 		}
 
 	.admin-title {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-xl);
 		color: var(--blue);
 		}

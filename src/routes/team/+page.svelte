@@ -117,10 +117,9 @@
 	<h1>TEAM</h1>
 	<p>
 		At JEHOVAH SHAMMAH MINISTRIES INTERNATIONAL, our dedicated team is committed
-		to fostering a vibrant,
-		welcoming community where everyone can grow in faith and love. Each member
-		of our team brings unique gifts and a deep passion for serving God and our
-		congregation.
+		to fostering a vibrant, welcoming community where everyone can grow in faith
+		and love. Each member of our team brings unique gifts and a deep passion for
+		serving God and our congregation.
 	</p>
 	<p>
 		Our team is here to support and guide you on your spiritual journey, whether
@@ -182,7 +181,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);
@@ -199,7 +198,7 @@
 		}
 
 	.name {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-base);
 		font-weight: 700;
 		margin-top: 5px;

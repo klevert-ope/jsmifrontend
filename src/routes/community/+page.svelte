@@ -28,19 +28,15 @@
 		<h2>Welcome to the Jehovah Shammah Ministries International Community!</h2>
 		<p>
 			Are you searching for a place to connect with God and a supportive
-			community
-			of believers? Look no further! Here at Jehovah Shammah Ministries
-			International, we're passionate about sharing the message of Jesus Christ
-			and helping others experience His love and grace.
+			community of believers? Look no further! Here at Jehovah Shammah
+			Ministries International, we're passionate about sharing the message of
+			Jesus Christ and helping others experience His love and grace.
 		</p>
 		<p>
 			we believe salvation comes through faith in Jesus Christ. His love and
-			grace
-			offer eternal life and peace, both now and in the future. This message,
-			the
-			good news of Jesus, compels us to share it with the world, fulfilling
-			God's
-			desire for all people to be saved 1 Timothy 2:3-4.
+			grace offer eternal life and peace, both now and in the future. This
+			message, the good news of Jesus, compels us to share it with the world,
+			fulfilling God's desire for all people to be saved 1 Timothy 2:3-4.
 		</p>
 	</div>
 	<section class="loop-banner">
@@ -87,7 +83,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);

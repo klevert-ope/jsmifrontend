@@ -2,8 +2,6 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
-	type IntervalID = number;
-
 	export const location = writable<string>('Asia/Dubai');
 
 	const currentTime = writable(new Date().toLocaleTimeString(undefined, {
@@ -12,8 +10,6 @@
 		minute: '2-digit',
 		hour12: true
 	}));
-
-	let interval: IntervalID;
 
 	const updateTime = () => {
 		currentTime.set(new Date().toLocaleTimeString(undefined, {
@@ -35,11 +31,9 @@
 			updateTime();
 		});
 
-		interval = setInterval(updateTime, 1000);
-
 		return () => {
 			locationSubscription();
-			clearInterval(interval);
+			clearInterval(setInterval(updateTime, 1000));
 		};
 	});
 </script>

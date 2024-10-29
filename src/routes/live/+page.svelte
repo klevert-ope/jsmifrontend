@@ -3,17 +3,16 @@
 </svelte:head>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { error, isLoading, lives, type LivesData } from './store';
 	import formartDate from '$lib/formartDate';
 	import NavSm from '$lib/NavSm.svelte';
 	import Navlg from '$lib/NavLg.svelte';
 
-	export let data: LivesData;
+	let { data } = $props<{ data: LivesData }>();
 
 	const numberLives = 5;
 
-	onMount(() => {
+	$effect(() => {
 		if (data.success && data.lives !== null) {
 			lives.set(data.lives);
 		} else if (data.error) {
@@ -26,7 +25,7 @@
 <Navlg />
 <NavSm />
 <section class="container">
-	<h1>LIVE BROADCASTS</h1>
+	<h1>BROADCASTS</h1>
 	<div class="margin-top">
 		{#if $isLoading}
 			<div class="large-max-width">
@@ -55,13 +54,10 @@
 	</div>
 </section>
 
+
 <style>
 	.badge {
-		padding: 4px 8px 4px 8px;
-		color: var(--white);
-		border-radius: 5px;
-		background-color: var(--black);
-		box-shadow: 4px 3px 3px var(--blue);
+		color: gray;
 		}
 
 	.container {
@@ -86,7 +82,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-3xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);

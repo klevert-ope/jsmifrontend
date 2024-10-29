@@ -2,16 +2,13 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { writable } from 'svelte/store';
-	import IoIosInformationCircle
-		from 'svelte-icons/io/IoIosInformationCircle.svelte';
-	import IoIosCheckmarkCircle
-		from 'svelte-icons/io/IoIosCheckmarkCircle.svelte';
+	import { BsCheckCircleFill } from 'svelte-icons-pack/bs';
+	import { Icon } from 'svelte-icons-pack';
+	import { RiSystemErrorWarningFill } from 'svelte-icons-pack/ri';
 
-	export let message = '';
-	export let type = 'success';
-	export let duration = 6;
+	let { message = '', type = 'success', duration = 6 } = $props();
 
-	let toast: HTMLElement | null = null;
+	let toast = $state<HTMLElement | null>(null);
 	let toastTween: gsap.core.Tween | null = null;
 
 	const toastStore = writable({
@@ -49,9 +46,11 @@
 		toastStore.update(() => ({ message, type, visible: true }));
 	});
 
-	$: if ($toastStore.visible && toast) {
-		toastTween = animateToast(toast, duration);
-	}
+	$effect(() => {
+		if ($toastStore.visible && toast) {
+			toastTween = animateToast(toast, duration);
+		}
+	});
 
 	onDestroy(() => {
 		if (toastTween) {
@@ -67,11 +66,11 @@
 	>
 		{#if $toastStore.type === 'success'}
 			<div class="success-icon">
-				<IoIosCheckmarkCircle />
+				<Icon size="28" src={BsCheckCircleFill} />
 			</div>
 		{:else if $toastStore.type === 'error'}
 			<div class="error-icon">
-				<IoIosInformationCircle />
+				<Icon size="28" src={RiSystemErrorWarningFill} />
 			</div>
 		{/if}
 		<p>{$toastStore.message}</p>
@@ -89,29 +88,22 @@
 		align-items: center;
 		flex-direction: row;
 		box-sizing: border-box;
-		width: calc(100% - 30px);
 		max-width: 600px;
 		padding: 10px;
 		transform: translate(-50%, -50%);
 		pointer-events: none;
-		border-radius: 5px;
+		border-radius: 8px;
 		background-color: oklch(0.191 0 89.876);
 		box-shadow: 0 4px 30px oklch(0.845 0 89.876);
 		gap: 20px;
 		}
 
 	.error {
-		color: oklch(0.636 0.227 26.593);
+		color: #f63636;
 		}
 
 	.success {
-		color: oklch(0.884 0.153 132.71);
-		}
-
-	.error-icon,
-	.success-icon {
-		width: 28px;
-		height: 28px;
+		color: #b1ee81;
 		}
 
 	p {

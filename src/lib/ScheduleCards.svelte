@@ -1,5 +1,6 @@
 <script lang="ts">
-	import TiTime from 'svelte-icons/ti/TiTime.svelte';
+	import { FaSolidClock } from 'svelte-icons-pack/fa';
+	import { Icon } from 'svelte-icons-pack';
 
 	const cards = [
 		{
@@ -62,7 +63,7 @@
 							<div class="activity-points">
 								<div class="time-sec">
 									<div class="time-icon">
-										<TiTime />
+										<Icon size="22" src={FaSolidClock} />
 									</div>
 									<p class="time">{activity.time}</p>
 								</div>
@@ -105,14 +106,14 @@
 		}
 
 	.card-title {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-base);
 		text-align: center;
 		color: var(--white);
 		}
 
 	.day {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-lg);
 		margin-bottom: 10px;
 		color: var(--yellow);
@@ -138,8 +139,6 @@
 		}
 
 	.time-icon {
-		width: 25px;
-		height: 25px;
 		margin-right: var(--xs-px10);
 		color: var(--blue);
 		}

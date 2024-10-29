@@ -19,7 +19,7 @@
 		hurting world. The Heart felt conviction and burden to share Gods true
 		Message of love, healing, restoration and bringing the lost souls into
 		God’s kingdom was the foundational call from our Lord Jesus that birthed
-		Jehovah Shammah Ministries International in November 2017. Jehovah
+		Jehovah Shammah Ministries International in December 2022. Jehovah
 		Shammah ministries is uniquely positioned spiritually and qualified to
 		fulfill this commission and kingdom need of reconciling the lost souls
 		to God through Christ Jesus the Messiah and grounding them in the
@@ -72,7 +72,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);

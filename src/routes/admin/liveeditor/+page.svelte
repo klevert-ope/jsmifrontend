@@ -6,7 +6,6 @@
 </svelte:head>
 
 <script lang="ts">
-	import IoMdArrowDropleft from 'svelte-icons/io/IoMdArrowDropleft.svelte';
 	import { enhance } from '$app/forms';
 	import ToastForm from '$lib/toastform.svelte';
 	import Modal from '$lib/LiveModal.svelte';
@@ -21,17 +20,16 @@
 		type LivesData,
 		successMessage
 	} from './store';
-	import { onMount } from 'svelte';
-	import FaPenSquare from 'svelte-icons/fa/FaPenSquare.svelte';
-	import MdDelete from 'svelte-icons/md/MdDelete.svelte';
-	import FaPen from 'svelte-icons/fa/FaPen.svelte';
+	import { IoCreate, IoTrashBin } from 'svelte-icons-pack/io';
+	import { Icon } from 'svelte-icons-pack';
+	import { BiSolidLeftArrow, BiSolidPencil } from 'svelte-icons-pack/bi';
 
-	export let data: LivesData;
+	let { data } = $props<{ data: LivesData }>();
 
 	const editing = writable(new Map<string, boolean>());
 	const modals = writable(new Map<string, boolean>());
 
-	onMount(() => {
+	$effect(() => {
 		if (data.success && data.lives !== null) {
 			lives.set(data.lives);
 		} else if (data.error) {
@@ -70,7 +68,7 @@
 	<div>
 		<a class="back-nav" href="/admin">
 			<div class="back-icon">
-				<IoMdArrowDropleft />
+				<Icon size="24" src={BiSolidLeftArrow} />
 			</div>
 			<p>Back</p>
 		</a>
@@ -79,8 +77,8 @@
 	<div
 		aria-label="create button"
 		class="create-button"
-		on:click={() => toggleModal('new')}
-		on:keydown={(event) => {
+		onclick={() => toggleModal('new')}
+		onkeydown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
             toggleModal('new');
         }
@@ -89,13 +87,13 @@
 		tabindex="0">
 		<p class="create-button-label">Create</p>
 		<div class="create-icon">
-			<FaPenSquare />
+			<Icon color="var(--yellow)" size="20" src={IoCreate} />
 		</div>
 	</div>
 
 	{#if $modals.has('new')}
 		<Modal isOpen={$modals.get('new') ?? false}
-					 on:close={() => toggleModal('new')}>
+					 onclose={() => toggleModal('new')}>
 			<form
 				action="?/postlive"
 				method="POST"
@@ -178,7 +176,7 @@
 								<div
 									aria-label="edit button"
 									class="edit-button"
-									on:click={() => {
+									onclick={() => {
 											toggleModal(live.id);
 											editing.update((e) => {
 												const newState = new Map(e);
@@ -186,7 +184,7 @@
 												return newState;
 											});
 										}}
-									on:keydown={(event) => {
+									onkeydown={(event) => {
 											if (event.key === 'Enter' || event.key === ' ') {
 												toggleModal(live.id);
 												editing.update((e) => {
@@ -199,14 +197,14 @@
 									role="button"
 									tabindex="0">
 									<div class="edit-icon">
-										<FaPen />
+										<Icon size="20" src={BiSolidPencil} />
 									</div>
 								</div>
 								<div
 									aria-label="delete button"
 									class="delete-button"
-									on:click={() => toggleModal(live.id)}
-									on:keydown={(event) => {
+									onclick={() => toggleModal(live.id)}
+									onkeydown={(event) => {
 											if (event.key === 'Enter' || event.key === ' ') {
 												toggleModal(live.id);
 											}
@@ -214,13 +212,13 @@
 									role="button"
 									tabindex="0">
 									<div class="delete-icon">
-										<MdDelete />
+										<Icon size="20" src={IoTrashBin} />
 									</div>
 								</div>
 							</div>
 							{#if $modals.has(live.id)}
 								<Modal isOpen={$modals.get(live.id) ?? false}
-											 on:close={() => closeModal(live.id)}>
+											 onclose={() => closeModal(live.id)}>
 									{#if $editing.has(live.id)}
 										<form
 											action="?/updatelive"
@@ -316,7 +314,7 @@
 
 <style>
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--sm-px15);
 		color: var(--blue);
@@ -365,8 +363,6 @@
 		}
 
 	.edit-icon {
-		width: 18px;
-		height: 18px;
 		color: var(--yellow);
 		}
 
@@ -379,8 +375,6 @@
 		}
 
 	.delete-icon {
-		width: 20px;
-		height: 20px;
 		color: var(--yellow);
 		}
 
@@ -392,12 +386,6 @@
 		}
 
 	.create-button-label:hover {
-		color: var(--yellow);
-		}
-
-	.create-icon {
-		width: 20px;
-		height: 20px;
 		color: var(--yellow);
 		}
 
@@ -581,10 +569,5 @@
 
 	.back-nav:hover {
 		color: var(--blue);
-		}
-
-	.back-icon {
-		width: 25px;
-		height: 25px;
 		}
 </style>

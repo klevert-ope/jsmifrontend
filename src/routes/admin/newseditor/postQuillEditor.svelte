@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { editorContent, form, QuillEditor, wordCountBody } from './store';
 	import { get } from 'svelte/store';
 
 	let Quill;
 
-	$: form.data.body = $editorContent;
+	$effect(() => {
+		form.data.body = $editorContent;
+	});
 
 	const updateWordCount = () => {
 		const editor = get(QuillEditor);
@@ -27,50 +28,55 @@
 		}
 	};
 
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			Quill = (await import('quill')).default;
+	let editor: any;
 
-			const editor = new Quill('#editorBody', {
-				theme: 'snow',
-				placeholder: 'Write your post...',
-				modules: {
-					toolbar: [
-						[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-						['bold', 'italic', 'underline', 'strike'],
-						['blockquote'],
-						[{ 'list': 'ordered' }],
-						[{ 'color': [] }, { 'background': [] }],
-						['link', 'image'],
-						['clean']
-					]
-				}
-			});
-			QuillEditor.set(editor);
+	$effect(() => {
+		const initializeEditor = async () => {
+			if (typeof window !== 'undefined') {
+				Quill = (await import('quill')).default;
 
-			editor.on('text-change', () => {
-				const delta = editor.getContents();
-				const deltaJson = JSON.stringify(delta, null, 4);
-				editorContent.set(deltaJson);
-				updateWordCount();
-				checkBodyEmpty();
-			});
-		}
+				editor = new Quill('#editorBody', {
+					theme: 'snow',
+					placeholder: 'Write your post...',
+					modules: {
+						toolbar: [
+							[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+							['bold', 'italic', 'underline', 'strike'],
+							['blockquote'],
+							[{ 'list': 'ordered' }],
+							[{ 'color': [] }, { 'background': [] }],
+							['link'],
+							['clean']
+						]
+					}
+				});
+				QuillEditor.set(editor);
+
+				editor.on('text-change', () => {
+					const delta = editor.getContents();
+					const deltaJson = JSON.stringify(delta, null, 4);
+					editorContent.set(deltaJson);
+					updateWordCount();
+					checkBodyEmpty();
+				});
+			}
+		};
+
+		initializeEditor();
+
+		return () => {
+			if (editor) {
+				editor.off('text-change');
+			}
+		};
 	});
 
-	afterUpdate(() => {
+	$effect(() => {
 		const textarea = document.querySelector('textarea[name="body"]') as HTMLTextAreaElement;
 		if (textarea) {
 			editorContent.subscribe(content => {
 				textarea.value = content;
 			});
-		}
-	});
-
-	onDestroy(() => {
-		const editor = get(QuillEditor);
-		if (editor) {
-			editor.off('text-change');
 		}
 	});
 </script>

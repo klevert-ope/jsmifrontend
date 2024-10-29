@@ -16,16 +16,16 @@
 		posts,
 		totalPages
 	} from './store';
-	import { beforeUpdate, onMount } from 'svelte';
 	import formartDate from '$lib/formartDate';
-	import IoIosArrowDropleftCircle
-		from 'svelte-icons/io/IoIosArrowDropleftCircle.svelte';
-	import IoIosArrowDroprightCircle
-		from 'svelte-icons/io/IoIosArrowDroprightCircle.svelte';
+	import {
+		BsArrowLeftCircleFill,
+		BsArrowRightCircleFill
+	} from 'svelte-icons-pack/bs';
 	import Navlg from '$lib/NavLg.svelte';
 	import NavSm from '$lib/NavSm.svelte';
+	import { Icon } from 'svelte-icons-pack';
 
-	export let data: PostsData;
+	let { data } = $props<{ data: PostsData }>();
 	const numberPostsPerPage = 10;
 
 	const getPaginatedPosts = () => {
@@ -49,7 +49,8 @@
 			currentPage.set($currentPage - 1);
 		}
 	};
-	onMount(() => {
+
+	$effect(() => {
 		if (data.success === true && data.posts !== null) {
 			posts.set(data.posts);
 		} else if (data.error !== undefined) {
@@ -57,20 +58,19 @@
 		}
 		isLoading.set(false);
 
-		$paginatedPosts = getPaginatedPosts();
+		paginatedPosts.set(getPaginatedPosts());
 		if (data.posts !== null) {
-			$totalPages = Math.ceil(data.posts.length / numberPostsPerPage);
+			totalPages.set(Math.ceil(data.posts.length / numberPostsPerPage));
 		}
 	});
 
-	beforeUpdate(() => {
-		$paginatedPosts = getPaginatedPosts();
+	$effect(() => {
+		paginatedPosts.set(getPaginatedPosts());
 		if (data.posts !== null) {
-			$totalPages = Math.ceil(data.posts.length / numberPostsPerPage);
+			totalPages.set(Math.ceil(data.posts.length / numberPostsPerPage));
 		}
 	});
 </script>
-
 
 <Navlg />
 <NavSm />
@@ -120,21 +120,22 @@
 			<button aria-label="Previous Blogposts"
 							class="icon-direction"
 							disabled={$currentPage === 1}
-							on:click={handlePreviousPage}
+							onclick={handlePreviousPage}
 			>
-				<IoIosArrowDropleftCircle />
+				<Icon size="34" src={BsArrowLeftCircleFill} />
 			</button>
 			<span class="font-xs font-semi-bold mx-small">{$currentPage}</span>
 			<button aria-label="Next Blogposts"
 							class="icon-direction"
 							disabled={$currentPage === $totalPages}
-							on:click={handleNextPage}
+							onclick={handleNextPage}
 			>
-				<IoIosArrowDroprightCircle />
+				<Icon size="34" src={BsArrowRightCircleFill} />
 			</button>
 		</div>
 	</div>
 </section>
+
 
 <style>
 	h3 {
@@ -179,8 +180,6 @@
 		}
 
 	.icon-direction {
-		width: 40px;
-		height: 40px;
 		cursor: pointer;
 		color: var(--black);
 		}
@@ -246,7 +245,7 @@
 		}
 
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--lg-px40);
 		margin-bottom: var(--sm-px15);

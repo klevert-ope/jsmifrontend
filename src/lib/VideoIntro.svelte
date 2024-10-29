@@ -16,7 +16,6 @@
 	<video
 		controls
 		poster={posterUrl}
-		disablepictureinpicture
 		style="width: 100%; border-radius: 8px;"
 	>
 		<source src={videoSource} type="video/mp4">

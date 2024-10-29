@@ -1,17 +1,20 @@
 <script lang="ts">
-	import {
-		afterUpdate,
-		createEventDispatcher,
-		onDestroy,
-		onMount
-	} from 'svelte';
-	import IoIosCloseCircle from 'svelte-icons/io/IoIosCloseCircle.svelte';
+	import { AiFillCloseCircle } from 'svelte-icons-pack/ai';
+	import { Icon } from 'svelte-icons-pack';
 
-	export let isOpen: boolean;
-	const dispatch = createEventDispatcher();
+	let { isOpen, onclose, children } = $props<{
+		isOpen: boolean;
+		onclose?: () => void;
+		children?: () => any
+	}>();
+
+	let isOpenState = $state(isOpen);
 
 	function closeModal() {
-		dispatch('close');
+		if (onclose) {
+			onclose();
+		}
+		isOpenState = false; // Update the state to close the modal
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
@@ -28,30 +31,29 @@
 		}
 	}
 
-	onMount(() => {
+	$effect(() => {
 		window.addEventListener('keydown', handleKeyDown);
-		toggleBodyScroll(isOpen);
+		toggleBodyScroll(isOpenState);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+			toggleBodyScroll(false);
+		};
 	});
 
-	onDestroy(() => {
-		window.removeEventListener('keydown', handleKeyDown);
-		toggleBodyScroll(false);
-	});
-
-	afterUpdate(() => {
-		toggleBodyScroll(isOpen);
+	$effect(() => {
+		toggleBodyScroll(isOpenState);
 	});
 </script>
 
-<div aria-modal="true" class="modal {isOpen ? 'open' : ''}" role="dialog"
-		 tabindex="-1">
+<div aria-modal="true" class="modal {isOpenState ? 'open' : ''}" role="dialog" tabindex="-1">
 	<div class="backdrop"></div>
 	<div class="modal-content">
 		<div
 			aria-label="close button"
 			class="close-button"
-			on:click={() => closeModal()}
-			on:keydown={(event) => {
+			onclick={() => closeModal()}
+			onkeydown={(event) => {
 				if (event.key === 'Enter' || event.key === ' ') {
 					closeModal();
 				}
@@ -59,11 +61,9 @@
 			role="button"
 			tabindex="0"
 		>
-			<div class="close-icon">
-				<IoIosCloseCircle />
-			</div>
+			<Icon color="var(--black)" size="28" src={AiFillCloseCircle} />
 		</div>
-		<slot></slot>
+		{@render children?.()}
 	</div>
 </div>
 
@@ -81,7 +81,7 @@
 		padding: var(--sm-px15);
 		}
 
-	.modal {
+	.modal.open {
 		display: flex;
 		}
 
@@ -112,11 +112,5 @@
 		align-items: end;
 		justify-content: end;
 		cursor: pointer;
-		}
-
-	.close-icon {
-		width: 25px;
-		height: 25px;
-		color: var(--black);
 		}
 </style>

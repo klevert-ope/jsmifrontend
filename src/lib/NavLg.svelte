@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
+	import { get, writable } from 'svelte/store';
 	import { page } from '$app/stores';
 
 	const activeLink = writable<string>('');
@@ -8,15 +8,12 @@
 		{ path: '/', label: 'HOME' },
 		{ path: '/news', label: 'NEWS' },
 		{ path: '/community', label: 'COMMUNITY' },
-		{ path: '/live', label: 'LIVE BROADCASTS' },
+		{ path: '/live', label: 'BROADCASTS' },
 		{ path: '/about', label: 'ABOUT' },
-		{ path: '/team', label: 'TEAM' },
-		{ path: '/donate', label: 'DONATE' }
+		{ path: '/team', label: 'TEAM' }
 	];
 
-	page.subscribe(() => {
-		activeLink.set($page.url.pathname);
-	});
+	$: activeLink.set(get(page).url.pathname);
 
 	const handleNavigation = (path: string) => {
 		activeLink.set(path);

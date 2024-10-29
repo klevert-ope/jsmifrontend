@@ -2,14 +2,14 @@
 	import { get, writable } from 'svelte/store';
 	import { fly } from 'svelte/transition';
 	import { page } from '$app/stores';
-	import IoIosReorder from 'svelte-icons/io/IoIosReorder.svelte';
-	import IoIosClose from 'svelte-icons/io/IoIosClose.svelte';
 	import { goto } from '$app/navigation';
+	import { Icon } from 'svelte-icons-pack';
+	import { AiOutlineClose, AiOutlineMenu } from 'svelte-icons-pack/ai';
 
 	const isOpen = writable(false);
 	const activeLink = writable<string>('');
 
-	$: activeLink.set($page.url.pathname);
+	$: activeLink.set(get(page).url.pathname);
 
 	function toggleMenu() {
 		isOpen.update(value => !value);
@@ -27,10 +27,9 @@
 		{ path: '/', label: 'HOME' },
 		{ path: '/news', label: 'NEWS' },
 		{ path: '/community', label: 'COMMUNITY' },
-		{ path: '/live', label: 'LIVE BROADCASTS' },
+		{ path: '/live', label: 'BROADCASTS' },
 		{ path: '/about', label: 'ABOUT' },
-		{ path: '/team', label: 'TEAM' },
-		{ path: '/donate', label: 'DONATE' }
+		{ path: '/team', label: 'TEAM' }
 	];
 </script>
 
@@ -39,14 +38,14 @@
 		<div class="flex-row-between">
 			<img src="https://res.cloudinary.com/dy9jpurpz/image/upload/v1719775803/jsmi-logo_p7ay2j.png"
 					 alt="JSMI logo" width="45" height="45">
-			<button class="font-medium font-sm" on:click={toggleMenu}>
+			<button on:click={toggleMenu}>
 				{#if $isOpen}
 					<div class="icon">
-						<IoIosClose />
+						<Icon color="var(--white)" size="35" src={AiOutlineClose} />
 					</div>
 				{:else}
 					<div class="icon">
-						<IoIosReorder />
+						<Icon color="var(--white)" size="35" src={AiOutlineMenu} />
 					</div>
 				{/if}
 			</button>
@@ -128,7 +127,7 @@
 		padding-bottom: var(--sm-px15);
 		padding-top: var(--sm-px15);
 		view-transition-name: nav;
-		background: var(--black);
+		background-color: var(--black);
 		}
 
 
@@ -161,14 +160,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		}
-
-	.font-medium {
-		font-weight: 500;
-		}
-
-	.font-sm {
-		font-size: var(--font-size-lg);
 		}
 
 	ul > li {
@@ -207,10 +198,6 @@
 		}
 
 	.icon {
-		width: 45px;
-		height: auto;
-		outline: none;
 		cursor: pointer;
-	  color: var(--white);
 		}
 </style>

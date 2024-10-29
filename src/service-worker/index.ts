@@ -1,3 +1,4 @@
+/// <reference types="@sveltejs/kit" />
 import { build, files, prerendered, version } from '$service-worker';
 import { cacheNames, clientsClaim } from 'workbox-core';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';

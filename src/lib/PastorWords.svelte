@@ -25,7 +25,7 @@
 </div>
 <style>
 	.title {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		font-weight: 500;
 		margin-bottom: 40px;

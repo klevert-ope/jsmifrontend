@@ -1,5 +1,6 @@
 <script lang="ts">
-	import FaPrayingHands from 'svelte-icons/fa/FaPrayingHands.svelte';
+	import { FaSolidHandsPraying } from 'svelte-icons-pack/fa';
+	import { Icon } from 'svelte-icons-pack';
 
 	interface Believes {
 		text: string;
@@ -44,7 +45,7 @@
 	{#each believes as believe (believe)}
 		<li class="font-md">
 			<div class="icon">
-				<FaPrayingHands />
+				<Icon color="var(--yellow)" size="28" src={FaSolidHandsPraying} />
 			</div>
 			{believe.text}
 		</li>
@@ -52,14 +53,8 @@
 </ul>
 
 <style>
-	.icon {
-		width: 24px;
-		height: 24px;
-		color: var(--yellow);
-		}
-
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-bottom: var(--sm-px15);
 		color: var(--blue);

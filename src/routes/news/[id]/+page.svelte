@@ -14,17 +14,17 @@
 </svelte:head>
 
 <script lang="ts">
-	import IoMdArrowDropleft from 'svelte-icons/io/IoMdArrowDropleft.svelte';
-	import { onMount } from 'svelte';
+	import { BiSolidLeftArrow } from 'svelte-icons-pack/bi';
 	import { writable } from 'svelte/store';
 	import type { PostData } from './store';
 	import { error, isLoading, post } from './store';
 	import { convertDeltaToHtml } from './delta';
 	import Navlg from '$lib/NavLg.svelte';
 	import NavSm from '$lib/NavSm.svelte';
+	import { Icon } from 'svelte-icons-pack';
 
-	export let data: PostData;
-	let bodyHtml = '';
+	let { data } = $props<{ data: PostData }>();
+	let bodyHtml = $state('');
 
 	const readTime = writable(0);
 
@@ -34,16 +34,24 @@
 		return Math.ceil(wordCount / wordsPerMinute);
 	};
 
-	onMount(async () => {
-		if (data.success === true && data.post !== null) {
-			post.set(data.post);
-			bodyHtml = await convertDeltaToHtml(JSON.parse(data.post.body));
-			const plainText = bodyHtml.replace(/<[^>]+>/g, '');
-			readTime.set(calculateReadTime(plainText));
-		} else if (data.error !== undefined) {
-			error.set(data.error);
-		}
-		isLoading.set(false);
+	let cleanup: (() => void) | undefined;
+
+	$effect(() => {
+		const initialize = async () => {
+			if (data.success === true && data.post !== null) {
+				post.set(data.post);
+				bodyHtml = await convertDeltaToHtml(JSON.parse(data.post.body));
+				const plainText = bodyHtml.replace(/<[^>]+>/g, '');
+				readTime.set(calculateReadTime(plainText));
+			} else if (data.error !== undefined) {
+				error.set(data.error);
+			}
+			isLoading.set(false);
+		};
+
+		initialize();
+
+		return cleanup;
 	});
 </script>
 
@@ -54,7 +62,7 @@
 		<div>
 			<a class="back-nav" href="/news">
 				<div class="back-icon">
-					<IoMdArrowDropleft />
+					<Icon size="24" src={BiSolidLeftArrow} />
 				</div>
 				<p>Back</p>
 			</a>
@@ -76,16 +84,16 @@
 					Estimated read
 					time: {$readTime} {$readTime === 1 ? 'minute' : 'minutes'}
 				</p>
-				<div
-					class="news-body">{@html bodyHtml}</div>
+				<div class="news-body">{@html bodyHtml}</div>
 			</div>
 		{/if}
 	</div>
 </section>
 
+
 <style>
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		margin-top: var(--md-px20);
 		margin-bottom: var(--md-px20);
@@ -188,11 +196,6 @@
 
 	.back-nav:hover {
 		color: var(--blue);
-		}
-
-	.back-icon {
-		width: 25px;
-		height: 25px;
 		}
 
 	.flex-col-center {

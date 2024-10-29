@@ -1,2 +1,7 @@
 .idea
 docker-compose.yml
+Dockerfile
+.prettierrc
+.prettierignore
+README.md
+

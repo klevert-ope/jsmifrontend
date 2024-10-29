@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { writable, type Writable } from 'svelte/store';
 
 	let marker: any;
@@ -34,33 +33,49 @@
 		}
 	};
 
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			const link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
-			document.head.appendChild(link);
+	let cleanup: (() => void) | undefined;
 
-			await new Promise((resolve) => {
-				link.onload = resolve;
-			});
+	$effect(() => {
+		const initializeMap = async () => {
+			if (typeof window !== 'undefined') {
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+				document.head.appendChild(link);
 
-			L = (await import('leaflet')).default;
-			map = L.map('map').setView([25.306162, 55.374558], 13);
-
-			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-			map.whenReady(() => {
-				coordinates.subscribe((coords) => {
-					createMarker(coords);
-					createPopup(coords);
+				await new Promise((resolve) => {
+					link.onload = resolve;
 				});
-			});
-		}
+
+				L = (await import('leaflet')).default;
+				map = L.map('map').setView([25.306162, 55.374558], 13);
+
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+				map.whenReady(() => {
+					coordinates.subscribe((coords) => {
+						createMarker(coords);
+						createPopup(coords);
+					});
+				});
+
+				cleanup = () => {
+					if (map) {
+						map.off();
+						map.remove();
+					}
+				};
+			}
+		};
+
+		initializeMap();
+
+		return cleanup;
 	});
 </script>
 
 <div id="map"></div>
+
 
 <style>
 	#map {

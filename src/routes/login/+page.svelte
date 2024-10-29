@@ -7,10 +7,11 @@
 
 <script lang="ts">
 	import ToastForm from '$lib/toastform.svelte';
-	import FaRegEye from 'svelte-icons/fa/FaRegEye.svelte';
-	import FaRegEyeSlash from 'svelte-icons/fa/FaRegEyeSlash.svelte';
-	import IoMdArrowDropright from 'svelte-icons/io/IoMdArrowDropright.svelte';
-	import IoMdArrowDropleft from 'svelte-icons/io/IoMdArrowDropleft.svelte';
+	import { AiFillEye, AiFillEyeInvisible } from 'svelte-icons-pack/ai';
+	import {
+		BsArrowLeftCircleFill,
+		BsArrowRightCircleFill
+	} from 'svelte-icons-pack/bs';
 	import { enhance } from '$app/forms';
 	import {
 		errorMessage,
@@ -21,6 +22,7 @@
 	} from './store';
 	import { goto } from '$app/navigation';
 	import { writable } from 'svelte/store';
+	import { Icon } from 'svelte-icons-pack';
 
 	let step = writable(1);
 </script>
@@ -54,6 +56,9 @@
 					required
 					type="text"
 				/>
+				{#if $errorMessage}
+					<p class="error">{$errorMessage}</p>
+				{/if}
 				<div class="flex-end">
 					<button
 						aria-label="next"
@@ -68,7 +73,7 @@
 					}}
 						type="button"
 					>
-						<IoMdArrowDropright />
+						<Icon size="34" src={BsArrowRightCircleFill} />
 					</button>
 				</div>
 			{:else if $step === 2}
@@ -78,7 +83,7 @@
 					on:click={() => $step = 1}
 					type="button"
 				>
-					<IoMdArrowDropleft />
+					<Icon size="34" src={BsArrowLeftCircleFill} />
 				</button>
 				<div class="username-display">
 					<input
@@ -120,12 +125,16 @@
 						type="button"
 					>
 						{#if $showPassword}
-							<FaRegEye />
+							<Icon color="var(--black)" size="28" src={AiFillEye} />
 						{:else}
-							<FaRegEyeSlash />
+							<Icon color="var(--black)" size="28" src={AiFillEyeInvisible} />
 						{/if}
 					</button>
 				</div>
+
+				{#if $errorMessage}
+					<p class="error">{$errorMessage}</p>
+				{/if}
 
 				<button
 					aria-label="login"
@@ -142,14 +151,19 @@
 
 {#if $successMessage}
 	<ToastForm message={$successMessage} type="success" />
-{:else if $errorMessage}
-	<ToastForm message={$errorMessage} type="error" />
 {/if}
 
 
 <style>
+	.error {
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+		margin-top: -25px;
+		color: oklch(0.636 0.227 26.593);
+		}
+
 	h1 {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);
 		text-align: center;
 		color: var(--blue);
@@ -160,21 +174,15 @@
 		}
 
 	.next-button {
-		width: 30px;
-		height: 30px;
 		cursor: pointer;
-		color: var(--yellow);
+		color: var(--black);
 		border-radius: 50%;
-		background-color: var(--black);
 		}
 
 	.back-button {
-		width: 30px;
-		height: 30px;
 		cursor: pointer;
-		color: var(--yellow);
+		color: var(--black);
 		border-radius: 50%;
-		background-color: var(--black);
 		}
 
 	.container {
@@ -218,8 +226,6 @@
 	.icon-password {
 		position: absolute;
 		right: 10px;
-		width: 20px;
-		height: 20px;
 		cursor: pointer;
 		color: var(--black);
 		}

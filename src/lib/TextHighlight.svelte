@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 	import { SplitText } from 'gsap/dist/SplitText';
@@ -9,7 +8,7 @@
 	const defaultColor = 'rgba(0, 0, 0, 0.3)';
 	const highlightColor = 'rgba(0, 0, 0, 1)';
 
-	onMount(() => {
+	$effect(() => {
 		const kjvParagraph = document.querySelector('.kjv p') as HTMLElement | null;
 
 		animateParagraph(kjvParagraph, 'top 90%', 'top 60%');
@@ -82,7 +81,7 @@
 		}
 
 	.title-verse {
-		font-family: 'LeArchitect', sans-serif;
+		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-xl);
 		margin-bottom: var(--xs-px10);
 		text-align: center;

@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
 	import { editorContent, form, QuillEditor, wordCountBody } from './store';
 	import { get } from 'svelte/store';
 
-	export let initialContent: string = '';
+	interface UpdateQuillEditorBodyProps {
+		oninput?: ((event: Event) => void);
+	}
+
+	let { oninput } = $props() as UpdateQuillEditorBodyProps;
 
 	let Quill;
+	let editor: any;
 
 	const updateWordCount = () => {
 		const editor = get(QuillEditor);
@@ -27,66 +31,73 @@
 		}
 	};
 
-	onMount(async () => {
-		if (typeof window !== 'undefined') {
-			Quill = (await import('quill')).default;
+	$effect(() => {
+		const initializeEditor = async () => {
+			if (typeof window !== 'undefined') {
+				Quill = (await import('quill')).default;
 
-			const editor = new Quill('#editorBody', {
-				theme: 'snow',
-				placeholder: 'Write your post...',
-				modules: {
-					toolbar: [
-						[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-						['bold', 'italic', 'underline', 'strike'],
-						['blockquote'],
-						[{ 'list': 'ordered' }],
-						[{ 'color': [] }, { 'background': [] }],
-						['link', 'image'],
-						['clean']
-					]
-				}
-			});
+				editor = new Quill('#editorBody', {
+					theme: 'snow',
+					placeholder: 'Write your post...',
+					modules: {
+						toolbar: [
+							[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+							['bold', 'italic', 'underline', 'strike'],
+							['blockquote'],
+							[{ 'list': 'ordered' }],
+							[{ 'color': [] }, { 'background': [] }],
+							['link'],
+							['clean']
+						]
+					}
+				});
 
-			QuillEditor.set(editor);
-			editor.setContents(JSON.parse(initialContent) || { ops: [] });
+				QuillEditor.set(editor);
+				editor.setContents(JSON.parse(form.data.body) || { ops: [] });
 
-			updateWordCount();
-
-			const initialDelta = editor.getContents();
-			const initialDeltaJson = JSON.stringify(initialDelta, null, 4);
-			editorContent.set(initialDeltaJson);
-			form.data.body = initialDeltaJson;
-
-			editor.on('text-change', () => {
-				const delta = editor.getContents();
-				const deltaJson = JSON.stringify(delta, null, 4);
-				editorContent.set(deltaJson);
 				updateWordCount();
-				checkBodyEmpty();
-			});
 
-			editorContent.subscribe(content => {
-				const textarea = document.querySelector('textarea[name="body"]') as HTMLTextAreaElement;
-				if (textarea) {
-					textarea.value = content;
+				const initialDelta = editor.getContents();
+				const initialDeltaJson = JSON.stringify(initialDelta, null, 4);
+				editorContent.set(initialDeltaJson);
+				form.data.body = initialDeltaJson;
+
+				editor.on('text-change', () => {
+					const delta = editor.getContents();
+					const deltaJson = JSON.stringify(delta, null, 4);
+					editorContent.set(deltaJson);
+					updateWordCount();
+					checkBodyEmpty();
+				});
+
+				editorContent.subscribe(content => {
+					const textarea = document.querySelector('textarea[name="body"]') as HTMLTextAreaElement;
+					if (textarea) {
+						textarea.value = content;
+					}
+					form.data.body = content;
+				});
+
+				if (oninput) {
+					editor.on('text-change', oninput);
 				}
-				form.data.body = content;
-			});
-		}
-	});
+			}
+		};
 
-	onDestroy(() => {
-		const editor = get(QuillEditor);
-		if (editor) {
-			editor.off('text-change');
-		}
+		initializeEditor();
+
+		return () => {
+			if (editor) {
+				editor.off('text-change');
+			}
+		};
 	});
 </script>
 
-<textarea hidden id="body" name="body"></textarea>
+<textarea bind:value={form.data.body} hidden id="body" name="body"
+					oninput={oninput}></textarea>
 <div id="editorBody"></div>
 <p class="font-xs flex-end">{$wordCountBody}/10000 Words</p>
-
 
 <style>
 	#editorBody {

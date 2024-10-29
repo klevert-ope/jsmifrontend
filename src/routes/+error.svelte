@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 
-	let errorMessage = '$page.error.message';
-	let errorStatus = Number($page.status);
+	let errorMessage = $state('');
+	let errorStatus = $state(0);
 
-	onMount(() => {
+	$effect(() => {
+		errorStatus = $page.status;
+		errorMessage = $page.error?.message || '';
+
 		if (errorStatus === 404) {
 			errorMessage = 'Page not Found';
 		} else if (errorStatus === 500) {
@@ -15,8 +17,8 @@
 </script>
 
 <div class="error-page">
-	<h2 class="font-lg font-semi-bold errormessage padding-bottom">{errorStatus} |
-		{errorMessage}</h2>
+	<h2 class="font-lg font-semi-bold errormessage padding-bottom">{errorStatus}
+		| {errorMessage}</h2>
 	<p class="font-sm">
 		{#if errorStatus === 404}
 			The page you are looking for does not exist or has been moved.
@@ -25,10 +27,15 @@
 			connection and try again.
 		{/if}
 	</p>
+	<button>
+		<a class="font-sm" href="/">Back Home</a>
+	</button>
 </div>
+
 
 <style>
 	.error-page {
+		min-height: 100svh;
 		padding: 50px;
 		text-align: center;
 		}
@@ -52,5 +59,17 @@
 
 	.padding-bottom {
 		padding-bottom: 10px;
+		}
+
+	a {
+		color: var(--white);
+		}
+
+	button {
+		margin-top: 30px;
+		padding: 0 20px;
+		border: none;
+		border-radius: 5px;
+		background-color: var(--black);
 		}
 </style>
