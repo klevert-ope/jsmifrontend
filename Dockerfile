@@ -1,7 +1,7 @@
 # Stage 1: Building the Svelte Node app
 
 # Start from the official Node.js 20 image based on Alpine Linux
-FROM node:23-alpine3.19 AS builder
+FROM node:20-alpine3.19 AS builder
 
 # Set the working directory to /app
 WORKDIR /app
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json gsap-bonus.tgz ./
 
 # Install production dependencies
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copy the source code to the working directory
 COPY . .
@@ -23,8 +23,8 @@ RUN npm prune --omit=dev
 
 # Stage 2: Running the Svelte Node app
 
-# Start from the official Node.js 23 image based on Alpine Linux
-FROM node:23-alpine3.19
+# Start from the official Node.js 20 image based on Alpine Linux
+FROM node:20-alpine3.19
 
 # Set the working directory to /app
 WORKDIR /app
@@ -40,4 +40,4 @@ COPY package*.json ./
 EXPOSE 3200
 
 # Run the Svelte Node app with strict mode and no lazy loading
-ENTRYPOINT [ "node", "--no-lazy", "--use-strict", "build" ]
+ENTRYPOINT [ "node", "--no-lazy", "--use-strict", "build/index.js" ]
