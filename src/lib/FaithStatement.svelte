@@ -21,6 +21,7 @@
 	<figure>
 		<img
 			alt="Church session"
+			loading="lazy"
 			src="https://res.cloudinary.com/dy9jpurpz/image/upload/v1720128858/IMG-20240627-WA0007_ybtekq.jpg">
 		<figcaption>
 			Church service at Jehovah Shammah Ministries
@@ -52,7 +53,7 @@
 	{/each}
 </ul>
 
-<style>
+<style lang="css">
 	h1 {
 		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);

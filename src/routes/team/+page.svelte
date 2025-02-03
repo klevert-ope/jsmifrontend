@@ -114,7 +114,7 @@
 <Navlg />
 <NavSm />
 <section class="container">
-	<h1>TEAM</h1>
+	<h1>Our Team: Leading with Passion and Purpose</h1>
 	<p>
 		At JEHOVAH SHAMMAH MINISTRIES INTERNATIONAL, our dedicated team is committed
 		to fostering a vibrant, welcoming community where everyone can grow in faith

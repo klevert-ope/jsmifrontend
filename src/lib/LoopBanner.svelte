@@ -108,7 +108,7 @@
 		{#each items.concat(items).concat(items) as item}
 			<div class="item">
 				{#if item.type === 'image'}
-					<img src={item.src} alt={item.alt} />
+					<img loading="lazy" src={item.src} alt={item.alt} />
 				{:else if item.type === 'heading'}
 					<h1>{item.text}</h1>
 				{:else if item.type === 'paragraph'}
@@ -119,7 +119,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="css">
 	.container-content {
 		position: relative;
 		display: flex;

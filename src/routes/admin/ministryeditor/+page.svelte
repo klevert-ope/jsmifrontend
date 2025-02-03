@@ -8,7 +8,7 @@
 </svelte:head>
 
 <script lang="ts">
-	import Modal from '$lib/newsModal.svelte';
+	import Modal from '$lib/ministryModal.svelte';
 	import ToastForm from '$lib/toastform.svelte';
 	import { enhance } from '$app/forms';
 	import PostQuillEditorBody from './postQuillEditor.svelte';
@@ -169,7 +169,7 @@
 			<p>Back</p>
 		</a>
 	</div>
-	<h1>News Editor</h1>
+	<h1>Ministry Editor</h1>
 	<div
 		aria-label="create button"
 		class="create-button"
@@ -460,7 +460,6 @@
 		}
 
 	textarea {
-		font-size: var(--font-size-sm);
 		height: 100px;
 		margin-top: 20px;
 		padding: 10px;
@@ -525,6 +524,7 @@
 		}
 
 	table {
+		overflow-x: auto;
 		width: 100%;
 		height: auto;
 		border-collapse: collapse;
@@ -613,7 +613,7 @@
 		}
 
 	.delete-button {
-		margin-left: 40px;
+		margin-left: 20px;
 		padding: 10px;
 		cursor: pointer;
 		border-radius: 8px;

@@ -18,7 +18,7 @@
 	<ScheduleCards />
 </div>
 
-<style>
+<style lang="css">
 	.schedule-header {
 		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);

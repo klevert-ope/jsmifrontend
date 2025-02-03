@@ -39,7 +39,7 @@
 		</div>
 		<div class="flex-col-center nav-admin">
 			<a class="live-editor" href="admin/liveeditor">Live Editor</a>
-			<a class="news-editor" href="admin/newseditor">News Editor</a>
+			<a class="news-editor" href="admin/ministryeditor">Ministry Editor</a>
 		</div>
 	</div>
 </section>

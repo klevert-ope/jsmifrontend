@@ -213,7 +213,6 @@
 		}
 
 	input[type="password"], input[type="text"] {
-		font-size: var(--font-size-sm);
 		box-sizing: border-box;
 		width: 100%;
 		height: 40px;

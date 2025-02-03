@@ -14,7 +14,7 @@
 
 	const links: { path: string; label: string }[] = [
 		{ path: '/', label: 'HOME' },
-		{ path: '/news', label: 'NEWS' },
+		{ path: '/ministry', label: 'MINISTRY' },
 		{ path: '/community', label: 'COMMUNITY' },
 		{ path: '/live', label: 'BROADCASTS' },
 		{ path: '/about', label: 'ABOUT' },
@@ -94,7 +94,7 @@
 	</div>
 </section>
 
-<style>
+<style lang="css">
 	section {
 		display: flex;
 		flex-direction: column;

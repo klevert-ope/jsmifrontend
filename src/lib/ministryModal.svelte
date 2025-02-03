@@ -70,7 +70,7 @@
 </div>
 
 
-<style>
+<style lang="css">
 	.modal {
 		position: fixed;
 		z-index: 1000;
@@ -84,7 +84,7 @@
 		padding: var(--sm-px15);
 		}
 
-	.modal {
+	.modal.open {
 		display: flex;
 		}
 

@@ -78,7 +78,7 @@
 {/if}
 
 
-<style>
+<style lang="css">
 	.toast {
 		position: fixed;
 		z-index: 9999;

@@ -14,7 +14,7 @@
 		if (onclose) {
 			onclose();
 		}
-		isOpenState = false; // Update the state to close the modal
+		isOpenState = false;
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
@@ -67,7 +67,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="css">
 	.modal {
 		position: fixed;
 		z-index: 1000;

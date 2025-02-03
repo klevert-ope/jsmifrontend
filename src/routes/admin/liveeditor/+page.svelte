@@ -367,7 +367,7 @@
 		}
 
 	.delete-button {
-		margin-left: 40px;
+		margin-left: 20px;
 		padding: 10px;
 		cursor: pointer;
 		border-radius: 8px;
@@ -433,6 +433,7 @@
 		}
 
 	table {
+		overflow-x: auto;
 		width: 100%;
 		margin-top: 20px;
 		border-collapse: collapse;
@@ -498,7 +499,6 @@
 		}
 
 	input {
-		font-size: var(--font-size-sm);
 		margin-top: 20px;
 		padding: 10px;
 		border: 1px solid rgba(20, 20, 20, 0.4);

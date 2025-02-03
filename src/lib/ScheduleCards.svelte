@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { FaSolidClock } from 'svelte-icons-pack/fa';
 	import { Icon } from 'svelte-icons-pack';
+	import { FaSolidClock } from 'svelte-icons-pack/fa';
+
 
 	const cards = [
 		{
@@ -77,8 +78,7 @@
 	</div>
 </div>
 
-
-<style>
+<style lang="css">
 	.cards {
 		display: flex;
 		flex-direction: row;

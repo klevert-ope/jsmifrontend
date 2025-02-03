@@ -23,7 +23,8 @@
 		src="https://res.cloudinary.com/dy9jpurpz/image/upload/v1720632442/d3dofv9wpzjliwfsjlcj.png" />
 	<h2>PASTOR COLLINS OKETCH</h2>
 </div>
-<style>
+
+<style lang="css">
 	.title {
 		font-family: 'Waiting Summer', sans-serif;
 		font-size: var(--font-size-2xl);

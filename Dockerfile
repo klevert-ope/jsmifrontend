@@ -37,7 +37,7 @@ COPY --from=builder /app/node_modules node_modules/
 COPY package*.json ./
 
 # Expose port 3000 for the Svelte Node app
-EXPOSE 3000
+EXPOSE 3200
 
 # Run the Svelte Node app with strict mode and no lazy loading
-CMD [ "node", "--no-lazy", "--use-strict", "build" ]
+ENTRYPOINT [ "node", "--no-lazy", "--use-strict", "build" ]

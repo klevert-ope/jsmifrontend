@@ -45,7 +45,7 @@
 	</p>
 </div>
 
-<style>
+<style lang="css">
 	.time {
 		display: flex;
 		align-items: center;

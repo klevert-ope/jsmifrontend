@@ -14,5 +14,5 @@ import './FaithStatement.svelte';
 import './formartDate';
 import './toastform.svelte';
 import './LiveModal.svelte';
-import './newsModal.svelte';
+import './ministryModal.svelte';
 import './DonateFloat.svelte';

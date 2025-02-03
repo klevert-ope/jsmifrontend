@@ -60,7 +60,7 @@
 <section>
 	<div class="container h-svh">
 		<div>
-			<a class="back-nav" href="/news">
+			<a class="back-nav" href="/ministry">
 				<div class="back-icon">
 					<Icon size="24" src={BiSolidLeftArrow} />
 				</div>

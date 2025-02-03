@@ -26,22 +26,24 @@
 <Navlg />
 <NavSm />
 <section class="hero">
-	<div class="flex-col-center px-1">
-		<img
-			alt="JSMI logo"
-			class="banner"
-			height="200"
-			src="https://res.cloudinary.com/dy9jpurpz/image/upload/v1719775803/jsmi-logo_p7ay2j.png"
-			width="200">
+	<video autoplay class="hero-video" controlsList="nodownload"
+				 disablePictureInPicture loop
+				 muted>
+		<source
+			src="https://res.cloudinary.com/dy9jpurpz/video/upload/v1738587458/6194389-hd_1920_1080_25fps_kn3gmi.mp4"
+			type="video/mp4">
+	</video>
+	<div class="quotations flex-col-center px-1">
 		<p class="introduction-quote">
 			WELCOME TO JEHOVAH SHAMMAH MINISTRIES INTERNATIONAL
 		</p>
+		<p class="introduction-quote1">PRAISE | CONNECT | LOVE</p>
 		<p class="introduction-quote2">
 			Where Faith Meets Purpose, and Lives are Transformed
 		</p>
 	</div>
 </section>
-<section class="intro-video container">
+<section class="intro-video">
 	<VideoIntro />
 </section>
 <section class="container">
@@ -95,7 +97,7 @@
 		<PastorWords />
 	</div>
 </section>
-<section class="faith-sec container">
+<section class="faith-sec">
 	<FaithStatement />
 </section>
 <section class="map-sec container">
@@ -109,8 +111,7 @@
 	<Map />
 </section>
 
-
-<style>
+<style lang="css">
 	.email-sec {
 		display: flex;
 		align-items: center;
@@ -183,7 +184,18 @@
 		color: var(--yellow);
 		}
 
-	.schedule {
+	.introduction-quote1 {
+		font-size: var(--font-size-xl);
+		font-weight: 600;
+		max-width: var(--large-max-width);
+		margin-top: var(--md-px20);
+		padding-right: var(--sm-px15);
+		padding-left: var(--sm-px15);
+		text-align: center;
+		color: red;
+		}
+
+	.schedule, .faith-sec, .intro-video {
 		padding: var(--lg-px40) var(--sm-px15);
 		}
 
@@ -208,28 +220,44 @@
 			}
 		}
 
-	@media (min-width: 801px) {
-		.banner {
-			max-width: 400px;
-			}
-		}
-
-	@media (max-width: 800px) {
-		.banner {
-			max-width: 300px;
-			}
-		}
-
 	.hero {
 		position: relative;
+		display: flex;
+		overflow: hidden;
+		align-items: center;
+		justify-content: center;
 		width: 100%;
-		height: 75vh;
-		background-color: rgba(0 0 0 / 0.1);
-		background-image: url('https://res.cloudinary.com/dy9jpurpz/image/upload/v1721249648/ds1cp3mspfxjw376o9a0.jpg');
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: cover;
-		background-blend-mode: overlay;
+		height: 65vh;
+		}
+
+	.hero::before {
+		position: absolute;
+		z-index: 2; /* Ensure it's above the video but below the text */
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		content: '';
+		background: rgba(0, 0, 0, 0.5); /* Faded black color */
+		}
+
+	.hero-video {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		}
+
+	.quotations {
+		position: relative;
+		z-index: 5;
+		padding: 20px;
+		text-align: center;
+		color: var(--white);
+		border-radius: 10px;
 		}
 
 	.flex-col-center {
@@ -237,11 +265,6 @@
 		align-items: center;
 		flex-direction: column;
 		justify-content: center;
-		}
-
-	.intro-video {
-		padding-top: var(--lg-px40);
-		padding-bottom: var(--lg-px40);
 		}
 
 	.flex-row {

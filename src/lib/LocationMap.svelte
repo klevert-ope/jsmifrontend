@@ -77,7 +77,7 @@
 <div id="map"></div>
 
 
-<style>
+<style lang="css">
 	#map {
 		z-index: 20;
 		display: flex;

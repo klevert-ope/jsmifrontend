@@ -25,7 +25,7 @@
 
 	const links: { path: string; label: string }[] = [
 		{ path: '/', label: 'HOME' },
-		{ path: '/news', label: 'NEWS' },
+		{ path: '/ministry', label: 'MINISTRY' },
 		{ path: '/community', label: 'COMMUNITY' },
 		{ path: '/live', label: 'BROADCASTS' },
 		{ path: '/about', label: 'ABOUT' },
@@ -71,7 +71,7 @@
 
 
 
-<style>
+<style lang="css">
 	:global(body) {
 		margin: 0;
 		padding: 0;

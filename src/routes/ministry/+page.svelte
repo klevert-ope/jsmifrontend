@@ -1,7 +1,7 @@
 <svelte:head>
 	<title>NEWS AND OUR STORIES</title>
 	<meta
-		content="JEHOVAH SHAMMAH MINISTRIES INTERNATIONAL - News and Our Stories"
+		content="JEHOVAH SHAMMAH MINISTRIES INTERNATIONAL - Ministry"
 		name="description" />
 </svelte:head>
 
@@ -76,7 +76,7 @@
 <NavSm />
 <section class="h-svh">
 	<div class="container">
-		<h1>News and Our Stories</h1>
+		<h1>Ministry</h1>
 		{#if $isLoading}
 			<div class="flex-col-center">
 				<div class="loader">
@@ -103,8 +103,9 @@
 						<p
 							class="date">{formartDate(post.created_at)}</p>
 						<div class="flex-end padding-top">
-							<a href={`/news/${post.id}`}
-								 aria-current={$page.url.pathname === `/news/${post.id}` ? 'page' : undefined}
+							<a href={`/ministry/${post.id}`}
+								 aria-current={$page.url.pathname === `/ministry/${post.id}` ?
+								 'page' : undefined}
 								 class="read-more"
 							>
 								Read More

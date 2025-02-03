@@ -15,9 +15,9 @@ export default defineConfig({
 		fs: {
 			allow: ['static']
 		},
-		port: 3000,
+		port: 3200,
 		strictPort: true,
 		host: true,
-		origin: 'http://0.0.0.0:3000'
+		origin: 'http://0.0.0.0:3200'
 	}
 });

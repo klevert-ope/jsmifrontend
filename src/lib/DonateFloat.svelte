@@ -55,7 +55,7 @@
 </button>
 
 
-<style>
+<style lang="css">
 	a {
 		all: unset;
 		}

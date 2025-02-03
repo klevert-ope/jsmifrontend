@@ -62,7 +62,7 @@
 </div>
 
 
-<style>
+<style lang="css">
 	.bible-verse {
 		font-size: var(--font-size-lg);
 		font-weight: 700;
