@@ -10,16 +10,13 @@ WORKDIR /app
 COPY package*.json gsap-bonus.tgz ./
 
 # Install production dependencies
-RUN npm ci --legacy-peer-deps
+RUN RUN npm install --only=production --legacy-peer-deps
 
 # Copy the source code to the working directory
 COPY . .
 
 # Build the Svelte Node app
 RUN npm run build
-
-# Remove development dependencies
-RUN npm prune --omit=dev
 
 # Stage 2: Running the Svelte Node app
 
