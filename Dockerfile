@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json gsap-bonus.tgz ./
 
 # Install production dependencies
-RUN RUN npm install --only=production --legacy-peer-deps
+RUN npm install --only=production --legacy-peer-deps
 
 # Copy the source code to the working directory
 COPY . .
